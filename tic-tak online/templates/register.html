@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Крестики-нолики</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-form">
+            <h1>Крестики-нолики</h1>
+            <p class="subtitle">Создайте новый аккаунт</p>
+            
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            <form method="POST" class="auth-form">
+                <input type="text" name="username" placeholder="Имя пользователя" required 
+                       maxlength="20" class="form-input" value="{{ request.form.username if request.form }}">
+                <input type="password" name="password" placeholder="Пароль" required 
+                       class="form-input">
+                <input type="password" name="confirm_password" placeholder="Подтвердите пароль" required 
+                       class="form-input">
+                <button type="submit" class="auth-btn">Зарегистрироваться</button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+            </div>
+            
+            <div class="requirements">
+                <h4>Требования:</h4>
+                <ul>
+                    <li>Имя пользователя: от 3 символов</li>
+                    <li>Пароль: от 4 символов</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

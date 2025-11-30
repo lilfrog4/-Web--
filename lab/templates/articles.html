@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Все статьи - Новостной Блог{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Все статьи</h1>
+        
+        <!-- Фильтр по категориям -->
+        <div class="mb-4">
+            <h5>Фильтр по категориям:</h5>
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('articles') }}?sort={{ current_sort }}" 
+                   class="btn {% if not current_category %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Все
+                </a>
+                <a href="{{ url_for('articles') }}?category=general&sort={{ current_sort }}" 
+                   class="btn {% if current_category == 'general' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Общее
+                </a>
+                <a href="{{ url_for('articles') }}?category=politics&sort={{ current_sort }}" 
+                   class="btn {% if current_category == 'politics' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Политика
+                </a>
+                <a href="{{ url_for('articles') }}?category=technology&sort={{ current_sort }}" 
+                   class="btn {% if current_category == 'technology' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Технологии
+                </a>
+                <a href="{{ url_for('articles') }}?category=sports&sort={{ current_sort }}" 
+                   class="btn {% if current_category == 'sports' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Спорт
+                </a>
+                <a href="{{ url_for('articles') }}?category=culture&sort={{ current_sort }}" 
+                   class="btn {% if current_category == 'culture' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Культура
+                </a>
+            </div>
+        </div>
+
+        <!-- Сортировка по времени -->
+        <div class="mb-4">
+            <h5>Сортировка по времени:</h5>
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('articles') }}{% if current_category %}?category={{ current_category }}&{% else %}?{% endif %}sort=newest" 
+                   class="btn {% if current_sort == 'newest' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    📅 Сначала новые
+                </a>
+                <a href="{{ url_for('articles') }}{% if current_category %}?category={{ current_category }}&{% else %}?{% endif %}sort=oldest" 
+                   class="btn {% if current_sort == 'oldest' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    📅 Сначала старые
+                </a>
+            </div>
+        </div>
+
+        <!-- Информация о примененных фильтрах -->
+        <div class="mb-4">
+            {% if current_category %}
+            <div class="alert alert-info d-flex justify-content-between align-items-center">
+                <div>
+                    📂 Категория: <strong>{{ current_category }}</strong>
+                    {% if current_sort == 'newest' %}
+                    | 📅 Сортировка: <strong>сначала новые</strong>
+                    {% elif current_sort == 'oldest' %}
+                    | 📅 Сортировка: <strong>сначала старые</strong>
+                    {% endif %}
+                </div>
+                <a href="{{ url_for('articles') }}?sort={{ current_sort }}" class="btn btn-sm btn-outline-info">
+                    ❌ Очистить категорию
+                </a>
+            </div>
+            {% else %}
+            <div class="alert alert-secondary">
+                📂 Показываем <strong>все категории</strong>
+                {% if current_sort == 'newest' %}
+                | 📅 Сортировка: <strong>сначала новые</strong>
+                {% elif current_sort == 'oldest' %}
+                | 📅 Сортировка: <strong>сначала старые</strong>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if articles %}
+            {% for article in articles %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h4 class="card-title">
+                            <a href="{{ url_for('news_article', id=article.id) }}" class="text-decoration-none">
+                                {{ article.title }}
+                            </a>
+                        </h4>
+                        <div>
+                            <span class="badge bg-secondary">{{ article.category }}</span>
+                            {% if article.created_date.date() == current_date %}
+                            <span class="badge bg-success">Новое!</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <p class="card-text">{{ article.text[:200] }}{% if article.text|length > 200 %}...{% endif %}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">
+                                👤 Автор: {{ article.author.name }} | 
+                                📅 {{ article.created_date.strftime('%d.%m.%Y %H:%M') }} |
+                                💬 Комментарии: {{ article.comments|length }}
+                            </small>
+                        </div>
+                        
+                        {% if current_user.is_authenticated and article.author == current_user %}
+                        <div>
+                            <a href="{{ url_for('edit_article', id=article.id) }}" class="btn btn-sm btn-outline-primary">✏️ Редактировать</a>
+                            <a href="{{ url_for('delete_article', id=article.id) }}" class="btn btn-sm btn-outline-danger" 
+                               onclick="return confirm('Вы уверены, что хотите удалить эту статью?')">🗑️ Удалить</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning">
+                📭 Статьи не найдены.
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('create_article') }}" class="alert-link">Создайте первую статью!</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

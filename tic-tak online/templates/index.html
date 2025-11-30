@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-нолики</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Крестики-нолики</h1>
+            <div class="user-menu">
+                <span class="username">Привет, {{ username }}!</span>
+                <a href="{{ url_for('stats') }}" class="stats-btn">📊 Статистика</a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Выйти</a>
+            </div>
+        </div>
+        
+        <div class="status" id="status">Подключаемся к игре...</div>
+        
+        <div class="game-info">
+            <div class="player-info">
+                <div class="player-badge player-x" id="playerX">Игрок X: <span id="playerXName">-</span></div>
+                <div class="player-badge player-o" id="playerO">Игрок O: <span id="playerOName">-</span></div>
+            </div>
+        </div>
+        
+        <div class="board" id="board"></div>
+        
+        <div class="controls">
+            <button onclick="game.joinGame()" id="joinBtn">Присоединиться к игре</button>
+        </div>
+        
+        <div id="gameResult"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

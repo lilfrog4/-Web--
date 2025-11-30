@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - Новостной Блог{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('articles') }}">Все статьи</a></li>
+                <li class="breadcrumb-item active">{{ article.title }}</li>
+            </ol>
+        </nav>
+        
+        <article>
+            <header class="mb-4">
+                <h1 class="display-5">{{ article.title }}</h1>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        Автор: {{ article.author.name }} | 
+                        {{ article.created_date.strftime('%d.%m.%Y %H:%M') }} |
+                        Категория: <span class="badge bg-secondary">{{ article.category }}</span>
+                    </small>
+                    {% if article.created_date.date() == current_date %}
+                    <span class="badge bg-success">Новое!</span>
+                    {% endif %}
+                </div>
+            </header>
+            
+            <div class="article-content mb-5">
+                {% for paragraph in article.text.split('\n') %}
+                    <p>{{ paragraph }}</p>
+                {% endfor %}
+            </div>
+
+            {% if current_user.is_authenticated and article.author == current_user %}
+            <div class="mb-4">
+                <a href="{{ url_for('edit_article', id=article.id) }}" class="btn btn-primary">Редактировать</a>
+                <a href="{{ url_for('delete_article', id=article.id) }}" class="btn btn-danger" 
+                   onclick="return confirm('Вы уверены, что хотите удалить эту статью?')">Удалить</a>
+            </div>
+            {% endif %}
+        </article>
+
+        <!-- Комментарии -->
+        <section class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Комментарии ({{ total_comments }})</h3>
+                {% if total_comments > 10 %}
+                <a href="{{ url_for('all_comments', article_id=article.id) }}" class="btn btn-outline-primary">
+                    📋 Посмотреть все комментарии
+                </a>
+                {% endif %}
+            </div>
+            
+            <!-- Форма добавления комментария -->
+            {% if current_user.is_authenticated %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Добавить комментарий</h5>
+                    <p class="text-muted">Вы вошли как: <strong>{{ current_user.name }}</strong></p>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.text.label(class="form-label") }}
+                            {{ form.text(class="form-control", rows=3) }}
+                            {% if form.text.errors %}
+                            <div class="text-danger">
+                                {% for error in form.text.errors %}
+                                <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <h5>Хотите оставить комментарий?</h5>
+                <p>Для добавления комментария необходимо <a href="{{ url_for('login') }}" class="alert-link">войти в систему</a>.</p>
+                <p>Еще нет аккаунта? <a href="{{ url_for('register') }}" class="alert-link">Зарегистрируйтесь</a>!</p>
+            </div>
+            {% endif %}
+
+            <!-- Список комментариев -->
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="card-title mb-1">
+                                    {{ comment.author_name }}
+                                    {% if comment.user_id and comment.user_id == article.user_id %}
+                                    <span class="badge bg-primary ms-1">Автор статьи</span>
+                                    {% endif %}
+                                </h6>
+                                <small class="text-muted">{{ comment.date.strftime('%d.%m.%Y %H:%M') }}</small>
+                            </div>
+                            {% if current_user.is_authenticated and comment.user_id == current_user.id %}
+                            <div>
+                                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" 
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Вы уверены, что хотите удалить этот комментарий?')">
+                                    Удалить
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <p class="card-text mt-2">{{ comment.text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Кнопка "Посмотреть все комментарии" внизу -->
+                {% if total_comments > 10 %}
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('all_comments', article_id=article.id) }}" class="btn btn-primary btn-lg">
+                        📋 Показать все {{ total_comments }} комментариев
+                    </a>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="alert alert-info">
+                    Пока нет комментариев. Будьте первым!
+                </div>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}

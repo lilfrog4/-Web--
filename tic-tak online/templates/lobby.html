@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лобби - Крестики-нолики</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Крестики-нолики</h1>
+            <div class="user-menu">
+                <span class="username">Привет, {{ username }}!</span>
+                <a href="{{ url_for('stats') }}" class="stats-btn">📊 Статистика</a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Выйти</a>
+            </div>
+        </div>
+
+        <div class="lobby-actions">
+            <button onclick="createRoom()" class="lobby-btn create-btn">
+                Создать комнату
+            </button>
+            <button onclick="showRoomList()" class="lobby-btn find-btn">
+                Найти комнату
+            </button>
+        </div>
+
+        <div id="roomList" class="room-list" style="display: none;">
+            <h3>Доступные комнаты:</h3>
+            <div id="roomsContainer"></div>
+            <button onclick="hideRoomList()" class="back-btn">← Назад</button>
+        </div>
+
+        <div id="waitingRoom" class="waiting-room" style="display: none;">
+            <h3>Ожидание игрока...</h3>
+            <p>ID комнаты: <span id="roomId"></span></p>
+            <div class="loading"></div>
+            <button onclick="leaveRoom()" class="cancel-btn">Отмена</button>
+        </div>
+    </div>
+
+    <script>
+        function createRoom() {
+            fetch('/create_room', { method: 'POST' })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('roomId').textContent = data.room_id;
+                        document.querySelector('.lobby-actions').style.display = 'none';
+                        document.getElementById('waitingRoom').style.display = 'block';
+                        checkGameStart();
+                    }
+                });
+        }
+
+        function showRoomList() {
+            fetch('/get_rooms')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const container = document.getElementById('roomsContainer');
+                        container.innerHTML = '';
+                        
+                        if (data.rooms.length === 0) {
+                            container.innerHTML = '<p>Нет доступных комнат</p>';
+                        } else {
+                            data.rooms.forEach(room => {
+                                const roomElement = document.createElement('div');
+                                roomElement.className = 'room-item';
+                                roomElement.innerHTML = `
+                                    <div class="room-info">
+                                        <strong>Комната ${room.room_id}</strong>
+                                        <span>Создатель: ${room.creator}</span>
+                                    </div>
+                                    <button onclick="joinRoom('${room.room_id}')" class="join-btn">
+                                        Присоединиться
+                                    </button>
+                                `;
+                                container.appendChild(roomElement);
+                            });
+                        }
+                        
+                        document.querySelector('.lobby-actions').style.display = 'none';
+                        document.getElementById('roomList').style.display = 'block';
+                    }
+                });
+        }
+
+        function hideRoomList() {
+            document.getElementById('roomList').style.display = 'none';
+            document.querySelector('.lobby-actions').style.display = 'block';
+        }
+
+        function joinRoom(roomId) {
+            fetch(`/join_room/${roomId}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = '/game';
+                    } else {
+                        alert(data.message);
+                        showRoomList();
+                    }
+                });
+        }
+
+        function leaveRoom() {
+            fetch('/leave_room', { method: 'POST' })
+                .then(r => r.json())
+                .then(() => {
+                    document.getElementById('waitingRoom').style.display = 'none';
+                    document.querySelector('.lobby-actions').style.display = 'block';
+                });
+        }
+
+        function checkGameStart() {
+            fetch('/game_state')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'success' && data.players && data.players.length === 2) {
+                        window.location.href = '/game';
+                    } else {
+                        setTimeout(checkGameStart, 2000);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

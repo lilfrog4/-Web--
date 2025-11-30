@@ -1,0 +1,186 @@
+{
+  "Саня": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 11,
+    "losses": 9,
+    "draws": 1,
+    "games_played": 21,
+    "registered_at": "2025-11-05T03:11:14.728904"
+  },
+  "Жека": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 2,
+    "losses": 5,
+    "draws": 0,
+    "games_played": 7,
+    "registered_at": "2025-11-05T03:11:27.907358"
+  },
+  "Семен": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 0,
+    "losses": 1,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T04:02:34.899492"
+  },
+  "Олег": {
+    "password": "472bbe83616e93d3c09a79103ae47d8f71e3d35a966d6e8b22f743218d04171d",
+    "wins": 5,
+    "losses": 4,
+    "draws": 0,
+    "games_played": 9,
+    "registered_at": "2025-11-05T04:03:39.862435"
+  },
+  "Роман": {
+    "password": "f8638b979b2f4f793ddb6dbd197e0ee25a7a6ea32b0ae22f5e3c5d119d839e75",
+    "wins": 1,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T05:09:32.627555"
+  },
+  "Петр": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 0,
+    "losses": 1,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T05:10:28.324586"
+  },
+  "Чувак1": {
+    "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 0,
+    "registered_at": "2025-11-05T05:21:51.821348"
+  },
+  "Чувак2": {
+    "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 0,
+    "registered_at": "2025-11-05T05:22:04.951807"
+  },
+  "Чувак3": {
+    "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 0,
+    "registered_at": "2025-11-05T05:22:23.821948"
+  },
+  "Чувак4": {
+    "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 0,
+    "registered_at": "2025-11-05T05:22:33.641728"
+  },
+  "Игнат": {
+    "password": "6a95bbab63d587b596398c4bd7e91a132f24032d2007d107e5ea71967724b092",
+    "wins": 1,
+    "losses": 1,
+    "draws": 0,
+    "games_played": 2,
+    "registered_at": "2025-11-05T09:49:38.204757"
+  },
+  "Чувак": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 0,
+    "losses": 1,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T11:46:55.964747"
+  },
+  "Алина": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 1,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T11:46:56.172121"
+  },
+  "Rabochy": {
+    "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "wins": 0,
+    "losses": 1,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T11:53:20.499473"
+  },
+  "Охотник": {
+    "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "wins": 1,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-05T11:53:51.994452"
+  },
+  "ivs": {
+    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "wins": 1,
+    "losses": 0,
+    "draws": 1,
+    "games_played": 2,
+    "registered_at": "2025-11-05T12:39:46.295265"
+  },
+  "Roman777": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 0,
+    "losses": 1,
+    "draws": 1,
+    "games_played": 2,
+    "registered_at": "2025-11-05T12:40:46.556175"
+  },
+  "floMaster": {
+    "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "wins": 1,
+    "losses": 1,
+    "draws": 2,
+    "games_played": 4,
+    "registered_at": "2025-11-06T02:37:50.493735"
+  },
+  "Гигачед": {
+    "password": "f8638b979b2f4f793ddb6dbd197e0ee25a7a6ea32b0ae22f5e3c5d119d839e75",
+    "wins": 1,
+    "losses": 1,
+    "draws": 2,
+    "games_played": 4,
+    "registered_at": "2025-11-06T02:38:23.349446"
+  },
+  "Jojo": {
+    "password": "f6f2ea8f45d8a057c9566a33f99474da2e5c6a6604d736121650e2730c6fb0a3",
+    "wins": 0,
+    "losses": 0,
+    "draws": 1,
+    "games_played": 1,
+    "registered_at": "2025-11-06T02:43:22.845503"
+  },
+  "Крутой": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 1,
+    "losses": 0,
+    "draws": 0,
+    "games_played": 1,
+    "registered_at": "2025-11-07T06:28:25.220642"
+  },
+  "Петро": {
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "wins": 0,
+    "losses": 0,
+    "draws": 1,
+    "games_played": 1,
+    "registered_at": "2025-11-30T19:12:02.244262"
+  },
+  "Данило": {
+    "password": "f8638b979b2f4f793ddb6dbd197e0ee25a7a6ea32b0ae22f5e3c5d119d839e75",
+    "wins": 0,
+    "losses": 0,
+    "draws": 1,
+    "games_played": 1,
+    "registered_at": "2025-11-30T19:12:19.316579"
+  }
+}

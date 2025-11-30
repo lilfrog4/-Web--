@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Новостной Блог{% endblock %}
+
+{% block content %}
+<div class="row min-height-content">
+    <div class="col-12">
+        <h1 class="display-4 text-center mb-4">Добро пожаловать в Новостной Блог!</h1>
+        <p class="lead text-center">Последние новости и интересные статьи</p>
+        
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="mb-4">Последние статьи</h2>
+                {% for article in articles %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('news_article', id=article.id) }}" class="text-decoration-none">
+                                    {{ article.title }}
+                                </a>
+                                {% if article.created_date.date() == current_date %}
+                                <span class="badge bg-success ms-2">Новое!</span>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">{{ article.created_date.strftime('%d.%m.%Y') }}</small>
+                        </div>
+                        <p class="card-text">{{ article.text[:200] }}{% if article.text|length > 200 %}...{% endif %}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

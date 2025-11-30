@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика - Крестики-нолики</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Статистика</h1>
+        
+        <div class="user-info">
+            <h2>Игрок: {{ username }}</h2>
+            <a href="{{ url_for('lobby') }}" class="back-btn">← Вернуться к игре</a>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Выйти</a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.get('games_played', 0) }}</div>
+                <div class="stat-label">Всего игр</div>
+            </div>
+            <div class="stat-card wins">
+                <div class="stat-number">{{ stats.get('wins', 0) }}</div>
+                <div class="stat-label">Победы</div>
+            </div>
+            <div class="stat-card losses">
+                <div class="stat-number">{{ stats.get('losses', 0) }}</div>
+                <div class="stat-label">Поражения</div>
+            </div>
+            <div class="stat-card draws">
+                <div class="stat-number">{{ stats.get('draws', 0) }}</div>
+                <div class="stat-label">Ничьи</div>
+            </div>
+        </div>
+
+        {% if stats.get('games_played', 0) > 0 %}
+        <div class="win-rate">
+            <h3>Процент побед: 
+                <span class="rate">{{ ((stats.get('wins', 0) / stats.get('games_played', 0)) * 100) | round(1) }}%</span>
+            </h3>
+        </div>
+        {% endif %}
+
+        <div class="leaderboard">
+            <h2>Топ игроков</h2>
+            <div class="leaderboard-list">
+                {% for player in top_players %}
+                <div class="leaderboard-item {% if player.username == username %}current-user{% endif %}">
+                    <div class="rank">#{{ loop.index }}</div>
+                    <div class="player-name">{{ player.username }}</div>
+                    <div class="player-stats">
+                        <span class="wins">{{ player.wins }}✅</span>
+                        <span class="losses">{{ player.losses }}❌</span>
+                        <span class="draws">{{ player.draws }}🤝</span>
+                        <span class="win-rate">{{ player.win_rate }}%</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
